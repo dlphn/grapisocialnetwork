@@ -1,0 +1,83 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="row">
+    <h1>Hello {{ user.firstName }} ! &#9786;</h1>
+    <form name="myForm">
+      <textarea type="text" ng-model="newNews" class="form-control" style="max-width: 100%; margin-bottom:10px;" rows="3" placeholder="Anything to share?" required>>
+      </textarea>
+      <label for="inputFile">File input (picture or video):</label>
+      <input id="inputFile" type="file" ngf-select ng-model="picFile" name="file"
+             accept="image/*" ngf-max-size="3MB"
+             ngf-model-invalid="errorFile">
+      <i ng-show="myForm.file.$error.maxSize">File too large
+          {{errorFile.size / 1000000|number:1}}MB: max 3M</i>
+      <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+      <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+      <br>
+      <input class="btn btn-success" id="postbtn" type="button" value="Post" ng-click="sendNews(picFile)" ng-disabled="myForm.$invalid"/><br><br>
+    </form>
+  </div>
+
+  <div class="row" id="new-news">
+    <a ng-if="incomingNews.length > 0" ng-click="setNewNews()">New <span class="badge">{{ difference }}</span></a>
+  </div>
+  <div class="row">
+  <div class="post-section" ng-repeat="post in news track by $index">
+    <div class="row">
+      <div class="col-sm-1 col-xs-2">
+        <img ng-src="{{ post.userInfo.image }}" class="profile-img">
+      </div>
+      <div class="col-sm-10 col-xs-10">
+        <a ng-click="toProfile(post.userId)"><strong>{{ post.user }}</strong></a><br>
+        <span class="post_date">{{ post.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+    </div>
+    <div class="row postContent">
+      <div class="col-md-10 col-md-offset-1 col-xs-12">
+        <div class="content_text">{{ post.contentText }}</div>
+        <div ng-if="post.contentImage !== undefined">
+          <image ng-if="post.contentImage.endsWith('.jpg')" ng-src="{{ post.contentImage }}" class="post-img">
+          <video ng-if="post.contentImage.endsWith('.mp4')" width="320" height="240" controls>
+            <source src="{{ post.contentImage }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div><br>
+        <div class="shared-post-section" ng-if="post.contentShared !== undefined">
+            <div class="row">
+              <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2">
+                <img ng-src="{{ post.sharedPostInfo.userImage }}" class="profile-img">
+              </div>
+              <div class="col-sm-10 col-xs-10">
+                <a ng-click="toProfile(post.sharedPostInfo.userId)"><strong>{{ post.sharedPostInfo.user }}</strong></a><br>
+                <span class="post_date">{{ post.sharedPostInfo.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+            </div>
+            <div class="row postContent">
+              <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+                <div class="content_text">{{ post.sharedPostInfo.contentText }}</div>
+                <div ng-if="post.sharedPostInfo.contentImage !== undefined">
+                  <image ng-if="post.sharedPostInfo.contentImage.endsWith('.jpg')" ng-src="{{ post.sharedPostInfo.contentImage }}" class="post-img">
+                  <video ng-if="post.sharedPostInfo.contentImage.endsWith('.mp4')" width="320" height="240" controls>
+                    <source src="{{ post.sharedPostInfo.contentImage }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div><br>
+              </div>
+            </div>
+        </div>
+      </div>
+      </div><br>
+
+      <div class="row shareTool">
+        <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+        <a ng-click="share = !share">Share</a>
+        <div class="input-group" ng-show="share">
+          <input type="text" class="form-control" ng-model="model.caption[$index]" placeholder="Comment">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default" ng-click="shareThis(post._id, $index)">POST</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

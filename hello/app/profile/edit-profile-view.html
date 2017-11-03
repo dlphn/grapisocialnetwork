@@ -1,0 +1,54 @@
+<div class="col-sm-8 col-sm-offset-2">
+
+<div class="row">
+  <h1>Edit profile</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <form name="myForm">
+      <div class="col-sm-12">
+        <button ngf-select ng-model="picFile" accept="image/*" ngf-model-invalid="errorFile">Select Picture</button>
+      </div>
+      <div class="row">
+      <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="col-sm-6 cropArea">
+          <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+          </img-crop>
+      </div>
+      <div class="col-sm-6">
+          <img ng-src="{{ croppedDataUrl }}" />
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-sm-6 col-sm-offset-6">
+        <button ng-click="upload(croppedDataUrl, picFile.name)" class="btn btn-default">Submit</button>
+        <span ng-show="result">Upload Successful</span>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+      </div>
+      </div>
+    </form>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-sm-6">
+    <label for"city">Change city:</label>
+    <input id="city" class="form-control" ng-model="user.city" ng-blur="updateCity()">
+  </div>
+  <div class="col-sm-6">
+    <label for"country">Change country:</label>
+    <input id="country" class="form-control" ng-model="user.country" ng-blur="updateCountry()">
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-sm-12">
+    <label for"bio">Change bio:</label>
+    <textarea id="bio" class="form-control" ng-model="user.bio" rows="4" ng-blur="updateBio()"></textarea>
+  </div>
+</div>
+<br>
+
+</div>

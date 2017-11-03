@@ -1,0 +1,27 @@
+<ion-view view-title="Grapi">
+<ion-content class="has-header padding">
+    <form name="loginForm" novalidate>
+    <div class="list">
+        <label class="item item-input">
+            <span class="input-label">Email</span>
+            <input type="email" name="email" ng-model="login.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,24})$/" required>
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Password</span>
+            <input type="password" name="password" ng-model="login.password" required>
+        </label>
+    </div>
+    <div>
+        <p ng-show="loginForm.email.$error.required && loginForm.email.$touched">* Email address is required</p>
+        <p ng-show="loginForm.email.$error.pattern && loginForm.email.$touched && loginForm.email.$dirty">* Email not valid</p>
+        <p ng-show="loginForm.password.$error.required && loginForm.password.$touched">* Password is required</p>
+    </div>
+    <label>
+        <button class="button button-block button-positive" ng-click="logUserIn()" ng-disabled="loginForm.$invalid">
+        Log In
+        </button>   
+    </label>
+    </form>
+    <img src="img/background.jpg" style="width: 100%;">
+</ion-content>
+</ion-view>

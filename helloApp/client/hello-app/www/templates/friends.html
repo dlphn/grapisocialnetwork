@@ -1,0 +1,34 @@
+<ion-view view-title="Friends">
+
+<ion-content class="has-header" has-tabs="true">
+    <div class="list">
+        <div class="item item-divider">
+            <h2>Friend requests</h2>
+        </div>
+        <div class="item item-avatar" ng-repeat="asking in friendRequests">
+            <img ng-src="{{ asking.info.image }}">
+            <a ng-href="#/main/profile/{{ asking.info._id }}"><h2>{{ asking.info.first_name }} {{ asking.info.last_name }}</h2></a>
+            <p><button class="button button-small button-outline button-light" ng-click="acceptFriendRequest(user._id, asking.userId)">Accept</button>
+            <button class="button button-small button-outline button-light" ng-click="cancelReceivedFriendRequest(user._id, asking.userId)">Refuse</button></p>
+        </div>
+        <div class="item item-divider item-input-inset">
+            <h2>Users</h2>
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input id="searchUser" type="search" ng-model="searchUser" placeholder="Search">
+            </label>
+        </div>
+        <div class="item item-avatar" ng-repeat="person in users | filter:searchUser" ng-show="person._id !== user._id">
+            <img ng-src="{{ person.image }}">
+            <a ng-href="#/main/profile/{{ person._id }}"><h2>{{ person.first_name }} {{ person.last_name }}</h2></a>
+            <span class="item-note">
+            <button class="button button-small button-outline button-light" ng-click="sendFriendRequest(user._id, person._id)" ng-hide="checkIsFriend(person._id) || checkRequestSent(person._id)">Add friend</button>
+            <button class="button button-small button-outline button-light" ng-click="cancelSentFriendRequest(user._id, person._id)" ng-hide="checkIsFriend(person._id) || !checkRequestSent(person._id)">Friend request sent - cancel</button>
+            <button class="button button-small button-outline button-light" ng-click="unfriend(user._id, person._id)" ng-show="checkIsFriend(person._id)">Unfriend</button>
+            </span>
+            <p>{{ person.city }}, {{ person.country }}</p>
+        </div>
+    </div>
+</ion-content>
+    
+</ion-view>

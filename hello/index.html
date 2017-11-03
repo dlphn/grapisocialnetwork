@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="Hello">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Grapi</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" type="text/css" href="app/css/ng-img-crop.css">
+    <link rel="stylesheet" href="app/css/main.css"/>
+    <link rel="stylesheet" href="app/css/signup.css"/>
+    <link rel="stylesheet" href="app/css/editprofile.css">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavigationController">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Grapi</a>
+        </div>
+        <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
+          <ul class="nav navbar-nav navbar-right" ng-show="!loggedIn">
+            <form class="form-inline" id="login-form">
+              <div class="form-group">
+                <input type="email" class="form-control" ng-model="login.email" placeholder="Email address" required autofocus>
+                <input type="password" class="form-control" ng-model="login.password" placeholder="Password" required>
+              </div>
+              <button type="submit" class="btn btn-default form-control" ng-click="logUserIn()">Log In</button>
+            </form>
+            <span ng-show="invalid">Invalid email or password</span>
+            <a ui-sref="signUp" ng-click="isCollapsed = !isCollapsed" style="float: right;" id="signup">Create an account</a>
+          </ul>
+          <ul class="nav navbar-nav navbar-right" ng-show="loggedIn">
+            <li ng-click="isCollapsed=!isCollapsed"><a href="#">Home</a></li>
+            <li ng-click="isCollapsed=!isCollapsed"><a ui-sref="myProfile">Profile</a></li>
+            <li ng-click="isCollapsed=!isCollapsed"><a ui-sref="editProfile">Edit Profile</a></li>
+            <li ng-click="isCollapsed=!isCollapsed"><a ui-sref="friend">Friends</a></li>
+            <li class="divider"></li>
+            <li ng-click="isCollapsed=!isCollapsed"><a ng-click="logOut()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ui-view></div>
+
+    <footer class="footer">
+      <div class="container">
+        <p>Copyright &copy; 2017</p>
+      </div>
+    </footer>
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.js"></script>
+  <script src="app/javascripts/ng-img-crop.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="app/app.js"></script>
+
+  <!-- Controllers -->
+  <script src="app/signup/signup-controller.js"></script>
+  <script src="app/navigation/navigation-controller.js"></script>
+  <script src="app/profile/edit-profile-controller.js"></script>
+  <script src="app/profile/my-profile-controller.js"></script>
+  <script src="app/profile/other-profile-controller.js"></script>
+  <script src="app/main/main-controller.js"></script>
+  <script src="app/friend/friend-controller.js"></script>
+
+  <!-- Libraries -->
+  <script src="node_modules/ng-file-upload/dist/ng-file-upload.js"></script>
+  <script src="node_modules/ng-file-upload/dist/ng-file-upload-all.js"></script>
+  <script src="node_modules/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+</html>

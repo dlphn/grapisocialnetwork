@@ -1,0 +1,39 @@
+<ion-view view-title="Join Grapi">
+<div class="bar bar-header bar-light">
+    <h1 class="title">Sign Up</h1>
+</div>
+<ion-content class="has-header padding">
+    <form name="signupForm" novalidate>
+    <div class="list">
+        <label class="item item-input">
+            <span class="input-label">First Name</span>
+            <input type="text" name="first_name" ng-model="newUser.first_name" required>
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Last Name</span>
+            <input type="text" name="last_name" ng-model="newUser.last_name" required>
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Email</span>
+            <input type="email" name="email" ng-model="newUser.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,24})$/" required>
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Password</span>
+            <input type="password" name="password" ng-model="newUser.password" required>
+        </label>
+    </div>
+    <div>
+        <p ng-show="signupForm.first_name.$error.required && signupForm.first_name.$touched">* First name is required</p>
+        <p ng-show="signupForm.last_name.$error.required && signupForm.last_name.$touched">* Last name is required</p>
+        <p ng-show="signupForm.email.$error.required && signupForm.email.$touched">* Email address is required</p>
+        <p ng-show="signupForm.email.$error.pattern && signupForm.email.$touched && signupForm.email.$dirty">* Email not valid</p>
+        <p ng-show="signupForm.password.$error.required && signupForm.password.$touched">* Password is required</p>
+    </div>
+    <label>
+            <button class="button button-block button-positive" ng-click="createUser()" ng-disabled="signupForm.$invalid">
+            Create an Account
+            </button>
+    </label>
+    </form>
+</ion-content>
+</ion-view>

@@ -1,0 +1,33 @@
+<ion-view view-title="Edit profile">
+    
+<ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+        <i class="icon ion-ios-arrow-back"></i>
+    </button>
+</ion-nav-buttons>
+
+<ion-content class="has-header padding">
+    <a class="button button-block icon icon-right ion-chevron-right" href="#/main/editPicture">
+    Edit picture
+    </a>   
+    <div class="list" id="edit">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Change city:</span>
+            <input type="text" ng-model="user.city" placeholder="City">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Change country:</span>
+            <input type="text" ng-model="user.country" placeholder="Country">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Change bio:</span>
+            <textarea type="text" ng-model="user.bio" placeholder="Bio"></textarea>
+        </label>
+    </div>
+    <label>
+        <button class="button button-block button-positive" ng-click="updateProfile()">
+        Update
+        </button>   
+    </label>
+</ion-content>
+</ion-view>

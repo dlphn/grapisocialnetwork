@@ -1,0 +1,36 @@
+<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3" ng-show="!loggedIn" ng-controller="SignupController">
+<div class="row">
+<div class="col-sm-12">
+  <form name="signupForm" class="form-signin" novalidate>
+    <legend>Create an Account</legend>
+      <div class="row">
+        <div class="col-sm-6">
+          <div ng-class="{ 'has-error' : signupForm.first_name.$error.required && signupForm.first_name.$touched }">
+            <input type="text" id="inputFirstName" name="first_name" ng-model="newUser.first_name" class="form-control" placeholder="First Name" required autofocus>
+            <p ng-show="signupForm.first_name.$error.required && signupForm.first_name.$touched" class="help-block">* First name is required</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div ng-class="{ 'has-error' : signupForm.last_name.$error.required && signupForm.last_name.$touched }">
+            <input type="text" id="inputLastName" name="last_name" ng-model="newUser.last_name" class="form-control" placeholder="Last Name" required>
+            <p ng-show="signupForm.last_name.$error.required && signupForm.last_name.$touched" class="help-block">* Last name is required</p>
+          </div>
+        </div>
+      </div>
+      <div ng-class="{ 'has-error' : signupForm.email.$error.pattern }">
+        <input type="email" id="inputEmail" name="email" ng-model="newUser.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,24})$/" class="form-control" placeholder="Email address" required>
+        <p ng-show="signupForm.email.$error.required && signupForm.email.$touched" class="help-block">* Email address is required</p>
+        <p ng-show="signupForm.email.$error.pattern && signupForm.email.$dirty && signupForm.email.$touched" class="help-block">* Email not valid</p>
+      </div>
+      <div ng-class="{ 'has-error' : signupForm.password.$error.required && signupForm.password.$touched }">
+        <input type="password" id="inputPassword" name="password" ng-model="newUser.password" class="form-control" placeholder="Password" required>
+        <p ng-show="signupForm.password.$error.required && signupForm.password.$touched" class="help-block">* Password is required</p>
+      </div>
+      <span ng-show="emailInvalid" class="help-block">A user with this email already exists</span>
+      <button ng-disabled="signupForm.$invalid" ng-click="createUser()" class="btn btn-lg btn-primary btn-block" type="submit">Create an Account</button>
+  </form>
+  <div ng-show="result" class="help-block">Welcome, you can now login!</div>
+  <div ng-show="error" class="help-block">Oops something went wrong, please refresh the page and try again.</div>
+</div>
+</div>
+</div>

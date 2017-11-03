@@ -1,0 +1,94 @@
+<ion-view>
+    
+<ion-nav-title>{{ friend.first_name }}'s profile</ion-nav-title>
+
+  <ion-nav-buttons side="left">
+      <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+        <i class="icon ion-ios-arrow-back"></i>
+      </button>
+  </ion-nav-buttons>
+
+    
+<ion-content class="has-header">
+    <div class="profile-info">
+        <div class="row">
+            <div class="col">
+                <img ng-src="{{ friend.image }}" class="img-circle">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>{{ friend.first_name }} {{ friend.last_name }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>{{ friend.city }}, {{ friend.country }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>{{ friend.posts_nb }}</h3>
+                posts
+            </div>
+            <div class="col">
+                <h3>{{ friend.friends.length }}</h3>
+                friends
+            </div>
+            <div class="col">
+                <span class="item-note">
+                    <button class="button" ng-click="sendFriendRequest(user._id, friend._id)" ng-hide="checkIsFriend(friend._id) || checkRequestSent(friend._id)">Add friend</button>
+                    <button class="button button-small" ng-click="cancelSentFriendRequest(user._id, friend._id)" ng-hide="checkIsFriend(friend._id) || !checkRequestSent(friend._id)">Friend request sent - cancel</button>
+                    <button class="button" ng-click="unfriend(user._id, friend._id)" ng-show="checkIsFriend(friend._id)">Unfriend</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="about padding">
+        <h3>About {{ friend.first_name }}:</h3>
+        <div class="card">
+            <div class="item item-text-wrap">
+                <p>{{ friend.bio }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <h3>&nbsp;Posts</h3>
+    <div class="list card" ng-repeat="post in news track by $index">
+        <div class="item item-avatar">
+            <img ng-src="{{ friend.image }}">
+            <h2>{{ post.user }}</h2>
+            <p class="post-date">{{ post.date | date: "dd/MM/yyyy HH:mm" }}</p>
+        </div>
+        <div class="item item-body">
+            <p>{{ post.contentText }}</p>
+            <div ng-if="post.contentImage !== undefined">
+                <img ng-if="post.contentImage.endsWith('.jpg')" class="full-image" ng-src="{{ post.contentImage }}">
+                <video ng-if="post.contentImage.endsWith('.mp4')" class="full-image" controls>
+                    <source src="{{ post.contentImage }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="shared-post-section" ng-if="post.contentShared !== undefined">
+                <div class="item item-avatar">
+                    <img ng-src="{{ post.sharedPostInfo.userImage }}">
+                    <h2>{{ post.sharedPostInfo.user }}</h2>
+                    <p class="post-date">{{ post.sharedPostInfo.date | date: "dd/MM/yyyy HH:mm" }}</p>
+                </div>
+                <div class="item item-body">
+                    <p>{{ post.sharedPostInfo.contentText }}</p>
+                    <div ng-if="post.sharedPostInfo.contentImage !== undefined">
+                        <img ng-if="post.sharedPostInfo.contentImage.endsWith('.jpg')" class="full-image" ng-src="{{ post.sharedPostInfo.contentImage }}">
+                        <video ng-if="post.contentImage.endsWith('.mp4')" class="full-image" controls>
+                            <source src="{{ post.sharedPostInfo.contentImage }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ion-content>
+</ion-view>

@@ -1,0 +1,46 @@
+<div class="col-sm-10 col-sm-offset-1">
+<div class="row">
+<div class="col-sm-12"><h2>&nbsp;Friend requests</h2></div>
+<p ng-if="friendRequests === undefined">None</p>
+</div>
+<div style="overflow-x:auto;">
+<table>
+<tr ng-repeat="asking in friendRequests" ng-if="friendRequests !== undefined">
+    <td><img ng-src="{{ asking.info.image }}" class="profile-img"></td>
+    <td><a ng-click="toProfile(asking.info._id)">{{ asking.info.first_name }} {{ asking.info.last_name }}</a></td>
+    <td><button class="btn btn-default form-control" ng-click="acceptFriendRequest(user._id, asking.userId)">Accept</button></td>
+    <td><button class="btn btn-default form-control" ng-click="cancelReceivedFriendRequest(user._id, asking.userId)">Refuse</button></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="col-sm-10 col-sm-offset-1">
+<div ng-init="users">
+  <div class="row">
+    <div class="col-sm-1"><h2>&nbsp;Users</h2></div>
+    <div class="form-group col-md-offset-7 col-md-4 col-sm-offset-6 col-sm-5 col-xs-7">
+      <div class="input-group" id="search-bar">
+        <input id="searchUser" type="text" ng-model="searchUser" class="form-control" placeholder="Search">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+      </div>
+    </div>
+  </div>
+  <div style="overflow-x:auto;">
+  <table id="searchUserResults">
+    <tr ng-repeat="person in users | filter:searchUser" ng-show="person._id !== user._id">
+      <td><img ng-src="{{ person.image }}" class="profile-img"></td>
+      <td><a ng-click="toProfile(person._id)">{{ person.first_name }} {{ person.last_name }}</a></td>
+      <td class="responsive_col">{{ person.email }}</td>
+      <td class="responsive_col">{{ person.city }}, {{ person.country }}</td>
+      <td><button class="btn btn-default form-control" ng-click="sendFriendRequest(user._id, person._id)"
+          ng-hide="checkIsFriend(person._id) || checkRequestSent(person._id)">Add friend</button>
+      <button class="btn btn-default form-control" ng-click="cancelSentFriendRequest(user._id, person._id)"
+          ng-hide="checkIsFriend(person._id) || !checkRequestSent(person._id)">Friend request sent - cancel</button>
+      <button class="btn btn-default form-control" ng-click="unfriend(user._id, person._id)"
+          ng-show="checkIsFriend(person._id)">Unfriend</button></td>
+    </tr>
+  </table>
+  </div>
+</div>
+</div>

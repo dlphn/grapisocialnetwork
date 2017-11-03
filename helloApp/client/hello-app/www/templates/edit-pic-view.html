@@ -1,0 +1,25 @@
+<ion-view view-title="Edit picture">
+    
+<ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+        <i class="icon ion-ios-arrow-back"></i>
+    </button>
+</ion-nav-buttons>
+
+<ion-content class="has-header padding">
+
+    <form name="editPic">
+        <button ngf-select ng-model="picFile" accept="image/*" ngf-model-invalide="errorFile" class="button button-block">Select picture</button>
+        <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
+            <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+            </img-crop>
+        </div>
+        <div>
+            <img ng-src="{{ croppedDataUrl }}" />
+        </div>
+        <button ng-click="upload(croppedDataUrl, picFile.name)" class="button button-block button-positive">Submit</button>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+    </form>
+    
+</ion-content>
+</ion-view>

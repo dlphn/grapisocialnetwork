@@ -1,0 +1,91 @@
+<ion-view view-title="My profile">
+    
+
+  <ion-nav-buttons side="left">
+      <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+        <i class="icon ion-ios-arrow-back"></i>
+      </button>
+  </ion-nav-buttons>
+
+    
+<ion-content class="has-header">
+    <div class="profile-info">
+        <div class="row">
+            <div class="col">
+                <img ng-src="{{ user.image }}" class="img-circle">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>{{ user.city }}, {{ user.country }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>{{ user.posts_nb }}</h3>
+                posts
+            </div>
+            <div class="col">
+                <h3>{{ user.friends.length }}</h3>
+                friends
+            </div>
+            <div class="col">
+                <a class="button button-small" href="#/main/friends">
+                Add friends
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="about padding">
+        <h3>About me:</h3>
+        <div class="card">
+            <div class="item item-text-wrap">
+                <p>{{ user.bio }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <h3>&nbsp;Posts</h3>
+    <div class="list card" ng-repeat="post in news track by $index">
+        <div class="item item-avatar">
+            <img ng-src="{{ user.image }}">
+            <h2>{{ post.user }}</h2>
+            <p class="post-date">{{ post.date | date: "dd/MM/yyyy HH:mm" }}</p>
+        </div>
+        <div class="item item-body">
+            <p>{{ post.contentText }}</p>
+            <div ng-if="post.contentImage !== undefined">
+                <img ng-if="post.contentImage.endsWith('.jpg')" class="full-image" ng-src="{{ post.contentImage }}">
+                <video ng-if="post.contentImage.endsWith('.mp4')" class="full-image" controls>
+                    <source src="{{ post.contentImage }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="shared-post-section" ng-if="post.contentShared !== undefined">
+                <div class="item item-avatar">
+                    <img ng-src="{{ post.sharedPostInfo.userImage }}">
+                    <h2>{{ post.sharedPostInfo.user }}</h2>
+                    <p class="post-date">{{ post.sharedPostInfo.date | date: "dd/MM/yyyy HH:mm" }}</p>
+                </div>
+                <div class="item item-body">
+                    <p>{{ post.sharedPostInfo.contentText }}</p>
+                    <div ng-if="post.sharedPostInfo.contentImage !== undefined">
+                        <img ng-if="post.sharedPostInfo.contentImage.endsWith('.jpg')" class="full-image" ng-src="{{ post.sharedPostInfo.contentImage }}">
+                        <video ng-if="post.contentImage.endsWith('.mp4')" class="full-image" controls>
+                            <source src="{{ post.sharedPostInfo.contentImage }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ion-content>
+</ion-view>

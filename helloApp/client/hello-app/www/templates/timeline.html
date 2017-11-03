@@ -1,0 +1,64 @@
+<ion-view view-title="Timeline">
+
+<ion-content class="padding" has-tabs="true">
+    <ion-refresher
+        pulling-text="Pull to refresh..."
+                   on-refresh="doRefresh(1)">
+    </ion-refresher>
+
+    <form name="myForm" novalidate>
+        <textarea type="text" ng-model="newNews" placeholder="Anything to share?" rows="3" required>
+        </textarea>
+        <label for="inputFile">File input (picture or video):</label>
+        <input id="inputFile" type="file" ngf-select ng-model="picFile" name="file"
+             accept="image/*" ngf-max-size="3MB"
+             ngf-model-invalid="errorFile">
+        <i ng-show="myForm.file.$error.maxSize">File too large
+          {{errorFile.size / 1000000|number:1}}MB: max 3M</i><br>
+        <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+        <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+        <br>
+        <button class="button button-balanced" ng-click="sendNews(picFile)" id="postbtn" ng-disabled="myForm.$invalid">Post</button>
+        <br><br>
+    </form>
+    
+    <div class="list card" ng-repeat="post in news">
+        <div class="item item-avatar">
+            <img ng-src="{{ post.userInfo.image }}">
+            <a ng-href="#/main/profile/{{ post.userId }}"><h2>{{ post.user }}</h2></a>
+            <p class="post-date">{{ post.date | date: "dd/MM/yyyy HH:mm" }}</p>
+        </div>
+        <div class="item item-body">
+            <p>{{ post.contentText }}</p>
+            <div ng-if="post.contentImage !== undefined">
+                <img ng-if="post.contentImage.endsWith('.jpg')" class="full-image" ng-src="{{ post.contentImage }}">
+                <video ng-if="post.contentImage.endsWith('.mp4')" class="full-image" controls>
+                    <source src="{{ post.contentImage }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="shared-post-section" ng-if="post.contentShared !== undefined">
+                <div class="item item-avatar">
+                    <img ng-src="{{ post.sharedPostInfo.userImage }}">
+                    <a ng-href="#/main/profile/{{ post.sharedPostInfo.userId }}"><h2>{{ post.sharedPostInfo.user }}</h2></a>
+                    <p class="post-date">{{ post.sharedPostInfo.date | date: "dd/MM/yyyy HH:mm" }}</p>
+                </div>
+                <div class="item item-body">
+                    <p>{{ post.sharedPostInfo.contentText }}</p>
+                    <div ng-if="post.sharedPostInfo.contentImage !== undefined">
+                        <img ng-if="post.sharedPostInfo.contentImage.endsWith('.jpg')" class="full-image" ng-src="{{ post.sharedPostInfo.contentImage }}">
+                        <video ng-if="post.contentImage.endsWith('.mp4')" class="full-image" controls>
+                            <source src="{{ post.sharedPostInfo.contentImage }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <div class="row shareTool">
+                <button class="button button-clear" ng-click="share(post._id)">Share</button>
+            </div>
+        </div>
+    </div>
+    
+</ion-content>
+</ion-view>
